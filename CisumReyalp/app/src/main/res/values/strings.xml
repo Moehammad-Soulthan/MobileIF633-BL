@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Cisum Reyalp</string>
+    <string name="profile_text_btn">Profile</string>
+    <string name="login_text_btn">Login</string>
+    <string name="subTitle_text">Read Backwards</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="full_name">Moehammad Soulthan Putra Danke</string>
+    <string name="nim">00000033276</string>
+    <string name="courses_name">(IF633-B) Mobile Application Programming</string>
+    <string name="referece_text">Reference :</string>
+    <string name="ref1">https://bit.ly/3lHAJKr</string>
+    <string name="ref2">https://bit.ly/38Yr25a</string>
+    <string name="ref3">https://bit.ly/3vUQm6b</string>
+    <string name="ref4">https://bit.ly/3c33tdn</string>
+    <string name="ref5">https://bit.ly/310BSDv</string>
+    <string name="welcome_text">Welcome</string>
+    <string name="okay_text">Okay</string>
+    <string name="ref6">https://bit.ly/3115rEQ</string>
+</resources>
