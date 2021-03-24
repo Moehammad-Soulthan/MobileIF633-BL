@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if( etUsername.getText().toString().equals("uasmobile") &&
-                    etPassword.getText().toString().equals("uasmobilegenap") ) {
+                        etPassword.getText().toString().equals("uasmobilegenap") ) {
                     finish();
                     startActivity(new Intent(LoginActivity.this, MusicActivity.class));
                 } else {

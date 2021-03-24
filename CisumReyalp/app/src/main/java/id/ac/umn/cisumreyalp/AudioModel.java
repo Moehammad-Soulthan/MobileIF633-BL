@@ -4,40 +4,33 @@ import java.io.Serializable;
 
 public class AudioModel implements Serializable {
 
-    String aPath;
-    String aName;
-    String aAlbum;
+    String aId;
+    String aTitle;
     String aArtist;
+    String aAlbum;
+    String aPath;
+    int aDuration;
+    int aSize;
 
-    public String getaPath() {
-        return aPath;
-    }
+    //    Setter
+    public void setaId(String aId) { this.aId = aId; }
+    public void setaTitle(String aTitle) { this.aTitle = aTitle; }
+    public void setaArtist(String aArtist) { this.aArtist = aArtist; }
+    public void setaAlbum(String aAlbum) { this.aAlbum = aAlbum; }
+    public void setaPath(String aPath) { this.aPath = aPath; }
+    public void setaDuration(int aDuration) { this.aDuration = aDuration; }
+    public void setaSize(int aSize) { this.aSize = aSize; }
 
-    public void setaPath(String aPath) {
-        this.aPath = aPath;
+    //    Getter
+    public String getaId() {
+        return aId;
     }
-
-    public String getaName() {
-        return aName;
+    public String getaTitle() { return aTitle; }
+    public String getaArtist() { return aArtist; }
+    public String getaAlbum() { return aAlbum; }
+    public String getaPath() { return aPath; }
+    public int getaDuration() {
+        return aDuration;
     }
-
-    public void setaName(String aName) {
-        this.aName = aName;
-    }
-
-    public String getaAlbum() {
-        return aAlbum;
-    }
-
-    public void setaAlbum(String aAlbum) {
-        this.aAlbum = aAlbum;
-    }
-
-    public String getaArtist() {
-        return aArtist;
-    }
-
-    public void setaArtist(String aArtist) {
-        this.aArtist = aArtist;
-    }
+    public int getaSize() { return aSize; }
 }

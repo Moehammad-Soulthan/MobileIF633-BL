@@ -36,6 +36,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MusicActivity extends AppCompatActivity {
+    private long backPressedTime;
     RecyclerView rvList;
     SongAdapter songAdapter;
 
@@ -49,7 +50,6 @@ public class MusicActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
                 return;
             }
@@ -58,36 +58,48 @@ public class MusicActivity extends AppCompatActivity {
         getSongs();
     }
 
+    @Override
+    public void onBackPressed() {
+        if(backPressedTime + 2000 > System.currentTimeMillis()) {
+            finish();
+            super.onBackPressed();
+            return;
+        } else {
+            Toast.makeText(getBaseContext(), "Back Again To Logout", Toast.LENGTH_SHORT).show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
+    }
+
     public void getSongs(){
         rvList = findViewById(R.id.rvList);
 
         List<AudioModel> allAudioFiles = getAllAudioFromDevice(MusicActivity.this);
 
         songAdapter = new SongAdapter(MusicActivity.this, allAudioFiles);
-        rvList.setLayoutManager(new LinearLayoutManager(MusicActivity.this));
         rvList.setAdapter(songAdapter);
+        rvList.setLayoutManager(new LinearLayoutManager(MusicActivity.this));
     }
 
-    public ArrayList<File> findSong (File file) {
-        ArrayList<File> arrayList = new ArrayList<>();
-        File[] files = file.listFiles();
+//    public ArrayList<File> findSong (File file) {
+//        ArrayList<File> arrayList = new ArrayList<>();
+//        File[] files = file.listFiles();
+//
+//        for(File singlefile: files)
+//        {
+//            if(singlefile.isDirectory() && !singlefile.isHidden()){
+//                arrayList.addAll(findSong(singlefile));
+//            }else{
+//                if(singlefile.getName().endsWith(".mp3")){
+//                    arrayList.add(singlefile);
+//                }
+//            }
+//        }
+//        return arrayList;
+//    }
 
-        for(File singlefile: files)
-        {
-            if(singlefile.isDirectory() && !singlefile.isHidden()){
-                arrayList.addAll(findSong(singlefile));
-            }else{
-                if(singlefile.getName().endsWith(".mp3")){
-                    arrayList.add(singlefile);
-                }
-            }
-        }
-        return arrayList;
-    }
-
-//    https://www.programmersought.com/article/39354470599/
+    //    https://www.programmersought.com/article/39354470599/
     public List<AudioModel> getAllAudioFromDevice(final Context context) {
-
         final List<AudioModel> tempAudioList = new ArrayList<>();
 
         Cursor cursor = getContentResolver().query(
@@ -107,10 +119,13 @@ public class MusicActivity extends AppCompatActivity {
                 int size = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE));
 //                MyMusic myMusic = new MyMusic(id, title, singer, path, size, time, album);
 
-                audioModel.setaName(title);
-                audioModel.setaAlbum(album);
+                audioModel.setaId(id);
+                audioModel.setaTitle(title);
                 audioModel.setaArtist(singer);
+                audioModel.setaAlbum(album);
                 audioModel.setaPath(path);
+                audioModel.setaDuration(time);
+                audioModel.setaSize(size);
                 tempAudioList.add(audioModel);
             }
         }
@@ -123,8 +138,11 @@ public class MusicActivity extends AppCompatActivity {
         switch (requestCode) {
             case 1: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getSongs();
-                    Toast.makeText(MusicActivity.this,"Permission Granted",Toast.LENGTH_SHORT).show();
+                    if (ContextCompat.checkSelfPermission(MusicActivity.this,
+                            Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                        getSongs();
+                        Toast.makeText(MusicActivity.this,"Permission Granted",Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(MusicActivity.this,"Permission Denied",Toast.LENGTH_SHORT).show();
                 }
